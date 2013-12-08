@@ -1,0 +1,24 @@
+# init.rc file for g project
+
+on boot
+    setprop ro.lge.test_mode true   
+
+on post-fs-data
+    # Chown ramdump_riva udevice   bluetooth.kang@lge.com
+    chmod 0660 /dev/ramdump_riva
+    chown system system /dev/ramdump_riva
+
+# LGE_CHANGE_S, 20121119  bluetooth.kang@lge.com  ssr riva dump
+service riva_ramdump /system/bin/riva_ramdump
+    class late_start
+    user system
+    group system
+    disabled
+
+on property:ro.build.type=userdebug
+    start riva_ramdump
+
+on property:ro.build.type=eng
+    start riva_ramdump
+
+# LGE_CHANGE_E, 20121119 bluetooth.kang@lge.com

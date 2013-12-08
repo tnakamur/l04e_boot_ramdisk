@@ -1,0 +1,30 @@
+# init.rc file for gk project(gk/gv/g pro)
+
+# 2012.08.24 real-wifi@lge.com[wo0gi] TestMode Daemon for broadcom driver [START]
+service diagd /system/bin/diagd 
+	class late_start
+	user root
+	group radio system
+	disabled
+	oneshot
+	socket lsock_diagd stream 666
+
+on property:wifi_ftm.diagd_start=1
+    start diagd
+
+on property:wifi_ftm.diagd_start=0
+    stop diagd
+# 2012.08.24 real-wifi@lge.com[wo0gi] TestMode Daemon for broadcom driver [END]
+
+#LGE_CHANGE_S, for RGB_LED
+on boot
+   chown system system /sys/devices/i2c-0/0-0032/led_current_index
+   chown system system /sys/devices/i2c-0/0-0032/led_pattern
+   chown system system /sys/devices/i2c-0/0-0032/led_blink
+   chown system system /sys/devices/i2c-0/0-0032/leds/R/brightness
+   chown system system /sys/devices/i2c-0/0-0032/leds/G/brightness
+   chown system system /sys/devices/i2c-0/0-0032/leds/B/brightness
+   chown system system /sys/devices/i2c-0/0-0032/leds/R/led_current
+   chown system system /sys/devices/i2c-0/0-0032/leds/G/led_current
+   chown system system /sys/devices/i2c-0/0-0032/leds/B/led_current
+#LGE_CHANGE_E, for RGB_LED
